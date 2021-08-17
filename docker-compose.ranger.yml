@@ -1,0 +1,24 @@
+version: '3'
+services:
+  ranger:
+    build:
+      context: .
+      dockerfile: Dockerfile.ranger
+      args:
+        - RANGER_VERSION=${RANGER_VERSION}
+    image: ${DOCKER_IMG}
+    container_name: ranger
+    hostname: ranger.example.com
+    stdin_open: true
+    tty: true
+    networks:
+      - ranger
+    ports:
+      - "6080:6080"
+    env_file:
+      - .env
+    command:
+      - /home/ranger/scripts/ranger.sh
+
+networks:
+  ranger:
